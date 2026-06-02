@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///C:/Users/fkdl0/Downloads/index.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="광운 도서관">
+<meta name="theme-color" content="#8B1A2B">
+<title>광운대학교 도서관</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./광운대학교 도서관_files/css2" rel="stylesheet">
+<link rel="stylesheet" href="./광운대학교 도서관_files/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:#8B1A2B}
+body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;align-items:flex-start}
+#app{width:100%;max-width:430px;height:100dvh;height:100vh;display:flex;flex-direction:column;background:#f5f5f5;position:relative;overflow:hidden}
+.hidden{display:none!important}
+
+/* STATUS BAR */
+.status-bar{background:#8B1A2B;color:white;padding:env(safe-area-inset-top,14px) 20px 6px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:500;flex-shrink:0;padding-top:max(env(safe-area-inset-top),14px)}
+.status-right{display:flex;gap:6px;align-items:center}
+
+/* HEADER */
+.header{background:#8B1A2B;padding:10px 16px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.header-logo{display:flex;align-items:center;gap:10px}
+.header-title .kr{font-size:16px;font-weight:700;color:white;letter-spacing:-0.5px}
+.header-title .en{font-size:9px;font-weight:300;color:rgba(255,255,255,0.75);letter-spacing:1px}
+.header-btn{background:none;border:none;color:white;cursor:pointer;padding:6px;border-radius:8px}
+.header-btn i{font-size:20px}
+
+/* BOTTOM NAV */
+.bottom-nav{background:white;border-top:1px solid #e0e0e0;display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px 10px;border:none;background:none;cursor:pointer;color:#999;position:relative}
+.nav-item.active{color:#8B1A2B}
+.nav-item i{font-size:22px;margin-bottom:3px}
+.nav-item span{font-size:10px;font-weight:500}
+.nav-badge{position:absolute;top:6px;right:calc(50% - 14px);background:#8B1A2B;color:white;font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* SCROLLABLE CONTENT */
+.content{flex:1;overflow-y:auto;background:#f5f5f5;-webkit-overflow-scrolling:touch}
+.content::-webkit-scrollbar{display:none}
+
+/* HOME GRID */
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#ddd;margin:12px}
+.grid-item{background:white;padding:16px 12px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;min-height:110px;text-align:center;gap:8px;-webkit-tap-highlight-color:rgba(139,26,43,0.1)}
+.grid-item:active{background:#f0e8ea}
+.grid-item .icon-wrap{width:52px;height:52px;position:relative}
+.grid-item .icon-wrap svg{width:100%;height:100%}
+.grid-label{font-size:13px;color:#333;font-weight:500;letter-spacing:-0.3px}
+.home-copyright{text-align:center;padding:14px;font-size:10px;color:#aaa;letter-spacing:0.5px}
+
+/* SECTION TITLE */
+.section{padding:14px 14px 8px;font-size:12px;font-weight:700;color:#8B1A2B;letter-spacing:1px;text-transform:uppercase}
+
+/* CARD */
+.card{background:white;border-radius:12px;margin:0 14px 12px;overflow:hidden;border:1px solid #ececec}
+.card-body{padding:14px 16px}
+
+/* ROOM CARDS */
+.room-card{background:white;border-radius:12px;margin:0 14px 10px;overflow:hidden;border:1px solid #ececec}
+.room-card-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#8B1A2B,#a52535)}
+.room-card-header.r6{background:linear-gradient(135deg,#6B3A7D,#8B4F9E)}
+.room-card-header.r8{background:linear-gradient(135deg,#2B5EA7,#3A7EC7)}
+.room-card-header.r10{background:linear-gradient(135deg,#2A7A4A,#3A9A5F)}
+.room-label{color:white;font-size:13px;font-weight:700}
+.room-capacity{color:rgba(255,255,255,0.85);font-size:11px;margin-top:2px}
+.room-slots{padding:10px 14px 12px;display:flex;flex-wrap:wrap;gap:6px}
+.slot{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:500;border:1.5px solid;cursor:pointer;text-align:center;min-width:70px}
+.slot.available{border-color:#8B1A2B;color:#8B1A2B;background:white}
+.slot.available:active{background:#8B1A2B;color:white}
+.slot.booked{border-color:#ddd;color:#bbb;background:#f9f9f9;cursor:not-allowed}
+.slot.mine{border-color:#c4a35a;color:#8B6B00;background:#FFF8E7}
+.slot-legend{display:flex;gap:10px;padding:0 14px 10px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:#888}
+.legend-dot{width:10px;height:10px;border-radius:3px;border:1.5px solid}
+.legend-dot.a{border-color:#8B1A2B;background:white}
+.legend-dot.b{border-color:#ddd;background:#f9f9f9}
+.legend-dot.m{border-color:#c4a35a;background:#FFF8E7}
+
+/* DATE STRIP */
+.date-strip{display:flex;gap:6px;padding:10px 14px 6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.date-strip::-webkit-scrollbar{display:none}
+.date-chip{flex-shrink:0;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer;border:1.5px solid #ddd;background:white;color:#555;font-weight:500;text-align:center}
+.date-chip.active{background:#8B1A2B;border-color:#8B1A2B;color:white}
+
+/* MODAL */
+.modal-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:100;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:white;width:100%;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));max-height:92%;overflow-y:auto}
+.modal-handle{width:40px;height:4px;background:#e0e0e0;border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:16px;font-weight:700;color:#222;margin-bottom:4px}
+.modal-sub{font-size:12px;color:#888;margin-bottom:16px}
+
+/* FORM */
+.form-group{margin-bottom:14px}
+.form-label{font-size:12px;font-weight:600;color:#444;margin-bottom:6px;display:block}
+.form-input{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:16px;font-family:'Noto Sans KR',sans-serif;outline:none;color:#222;-webkit-appearance:none;appearance:none;background:white}
+.form-input:focus{border-color:#8B1A2B}
+.form-hint{font-size:11px;color:#888;margin-top:5px}
+
+/* BUTTONS */
+.btn-primary{width:100%;padding:14px;background:#8B1A2B;color:white;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-top:4px;-webkit-appearance:none}
+.btn-primary:active{background:#6a1020}
+.btn-secondary{width:100%;padding:12px;background:white;color:#8B1A2B;border:1.5px solid #8B1A2B;border-radius:12px;font-size:14px;font-weight:600;font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-top:8px;-webkit-appearance:none}
+.btn-secondary:active{background:#fdf0f2}
+.btn-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Noto Sans KR',sans-serif;cursor:pointer;border:none;-webkit-appearance:none}
+.btn-sm.red{background:#8B1A2B;color:white}
+.btn-sm.gray{background:#f0f0f0;color:#555;border:1px solid #ddd}
+
+/* BOOKING LIST */
+.booking-item{background:white;border-radius:12px;margin:0 14px 10px;overflow:hidden;border:1px solid #ececec}
+.booking-top{padding:12px 14px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #f5f5f5}
+.booking-room{font-size:14px;font-weight:700;color:#222}
+.booking-date{font-size:11px;color:#888;margin-top:2px}
+.booking-badge{padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
+.booking-badge.upcoming{background:#EEF6FF;color:#1a5fa8}
+.booking-badge.done{background:#F5F5F5;color:#888}
+.booking-badge.cancelled{background:#FFF5F5;color:#bbb}
+.booking-info{padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.booking-time{display:flex;align-items:center;gap:6px;font-size:13px;color:#444}
+.booking-time i{font-size:15px;color:#8B1A2B}
+
+/* MESSAGES */
+.msg-item{background:white;margin:0 14px 8px;border-radius:12px;padding:13px 14px;border:1px solid #ececec;cursor:pointer}
+.msg-item.unread{border-left:3px solid #8B1A2B}
+.msg-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px}
+.msg-title{font-size:13px;font-weight:600;color:#222;display:flex;align-items:center;gap:6px}
+.msg-dot{width:7px;height:7px;background:#8B1A2B;border-radius:50%;flex-shrink:0;margin-top:3px}
+.msg-time{font-size:10px;color:#aaa;white-space:nowrap;margin-left:8px}
+.msg-body{font-size:12px;color:#666;line-height:1.5}
+
+/* PROFILE */
+.profile-card{background:white;border-radius:12px;margin:0 14px 12px;padding:16px;border:1px solid #ececec;display:flex;align-items:center;gap:14px}
+.profile-avatar{width:56px;height:56px;background:#8B1A2B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:22px;font-weight:700;flex-shrink:0}
+.profile-name{font-size:15px;font-weight:700;color:#222}
+.profile-id{font-size:12px;color:#888;margin-top:3px;font-family:'Oswald',sans-serif;letter-spacing:1px}
+.profile-dept{font-size:12px;color:#555;margin-top:2px}
+.info-list{background:white;border-radius:12px;margin:0 14px 12px;border:1px solid #ececec;overflow:hidden}
+.info-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid #f5f5f5;gap:12px}
+.info-row:last-child{border-bottom:none}
+.info-row i{font-size:18px;color:#8B1A2B;width:22px;flex-shrink:0}
+.info-row-text{flex:1;font-size:13px;color:#222}
+.info-row-value{font-size:13px;color:#888}
+
+/* TOAST */
+.toast{position:absolute;top:max(env(safe-area-inset-top),14px);left:14px;right:14px;background:#222;color:white;border-radius:12px;padding:12px 14px;z-index:200;display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.5;animation:toastIn 0.3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.toast i{font-size:18px;color:#FFB84D;flex-shrink:0;margin-top:1px}
+.toast-title{font-weight:700;margin-bottom:2px}
+.toast-body{opacity:0.85}
+.toast-close{margin-left:auto;background:none;border:none;color:white;cursor:pointer;font-size:20px;padding:0;opacity:0.7;flex-shrink:0;line-height:1}
+
+/* CONFIRM BOX */
+.confirm-box{background:#FFF8E7;border:1px solid #f0d89a;border-radius:10px;padding:12px 14px;margin:14px 0;font-size:12px;color:#7a5c00;line-height:1.6}
+
+/* ID CARD */
+.id-card{background:linear-gradient(135deg,#8B1A2B,#c0394f);border-radius:16px;margin:0 14px 12px;padding:18px;color:white;position:relative;overflow:hidden}
+.id-card::after{content:'광운대학교';position:absolute;right:-20px;bottom:10px;font-size:48px;font-weight:700;opacity:0.06;white-space:nowrap;font-family:'Oswald',sans-serif}
+.id-card-label{font-size:9px;opacity:0.7;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+.id-card-value{font-size:14px;font-weight:600}
+.id-card-num{font-size:22px;font-weight:700;letter-spacing:2px;font-family:'Oswald',sans-serif;margin-bottom:10px}
+.id-card-barcode{height:36px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;gap:1px;padding:4px 8px}
+.bar{background:#222;border-radius:1px}
+
+/* LOGIN */
+.login-screen{background:#f0e8e9;min-height:100%;display:flex;flex-direction:column}
+.login-header{background:#8B1A2B;padding:max(env(safe-area-inset-top),40px) 24px 28px;padding-top:max(env(safe-area-inset-top),40px);text-align:center}
+.login-header .title{color:white;font-size:18px;font-weight:700;margin-top:14px;letter-spacing:-0.5px}
+.login-header .sub{color:rgba(255,255,255,0.7);font-size:11px;margin-top:4px;letter-spacing:1px}
+.login-body{padding:24px 20px;flex:1}
+.login-card{background:white;border-radius:16px;padding:22px;border:1px solid #e8d8da;box-shadow:0 4px 20px rgba(139,26,43,0.1)}
+.login-card-title{font-size:16px;font-weight:700;color:#8B1A2B;text-align:center;margin-bottom:18px;font-family:'Oswald',sans-serif;letter-spacing:1px}
+.login-footer{text-align:center;font-size:10px;color:#999;padding:14px;letter-spacing:0.5px;padding-bottom:max(env(safe-area-inset-bottom),14px)}
+
+/* STEP INDICATOR */
+.step-badge{display:inline-flex;align-items:center;gap:6px;background:#FFF0F0;padding:5px 12px;border-radius:20px;font-size:11px;color:#8B1A2B;font-weight:600;margin-bottom:12px}
+
+/* GENERATED ID */
+.generated-id{background:#f9f9f9;border:1.5px dashed #c4a35a;border-radius:10px;padding:16px;text-align:center;margin:12px 0}
+.generated-id .id-label{font-size:11px;color:#888;margin-bottom:5px}
+.generated-id .id-num{font-size:24px;font-weight:700;color:#8B1A2B;font-family:'Oswald',sans-serif;letter-spacing:2px}
+
+/* DEPT GRID */
+.dept-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+.dept-chip{padding:8px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:12px;color:#555;background:white;cursor:pointer;text-align:center}
+.dept-chip.selected{border-color:#8B1A2B;color:#8B1A2B;background:#FFF0F2;font-weight:600}
+
+/* TIME OPTION */
+.time-selector{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.time-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;background:white}
+.time-option.selected{border-color:#8B1A2B;background:#FFF0F2}
+.time-option.disabled{opacity:0.4;cursor:not-allowed}
+.time-option i{font-size:16px;color:#aaa}
+.time-option.selected i{color:#8B1A2B}
+.time-option-text{flex:1;font-size:13px;color:#333}
+.time-option.selected .time-option-text{color:#8B1A2B;font-weight:600}
+.time-radio{width:18px;height:18px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.time-option.selected .time-radio{border-color:#8B1A2B}
+.time-option.selected .time-radio::after{content:'';width:8px;height:8px;background:#8B1A2B;border-radius:50%;display:block}
+
+/* NOTICE */
+.notice-item{background:white;margin:0 14px 8px;border-radius:12px;padding:14px;border:1px solid #ececec}
+.notice-title{font-size:13px;font-weight:600;color:#222;margin-bottom:4px}
+.notice-date{font-size:11px;color:#aaa}
+</style>
+</head>
+<body>
+<div id="app"><div style="flex:1;overflow-y:auto"><div class="login-screen">
+    <div class="login-header">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px">
+        <div style="width:48px;height:48px"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="26" cy="26" r="25" fill="#8B1A2B" stroke="#c4a35a" stroke-width="1.5"></circle>
+  <text x="26" y="31" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="serif">광운</text>
+</svg></div>
+        <div style="text-align:left">
+          <div style="color:white;font-size:16px;font-weight:700">광운대학교</div>
+          <div style="color:rgba(255,255,255,0.75);font-size:9px;letter-spacing:1px">KwangWoon University</div>
+        </div>
+      </div>
+      <div class="title">MOBILE LIBRARY</div>
+      <div class="sub">스터디룸 예약 시스템</div>
+    </div>
+    <div class="login-body">
+      <div class="login-card">
+        <div class="login-card-title">MOBILE LIBRARY</div>
+        <div class="form-group">
+          <label class="form-label">도서관 아이디</label>
+          <input class="form-input" id="lid" type="text" placeholder="아이디를 입력하세요" value="" oninput="state.loginId=this.value" autocomplete="username" autocapitalize="none">
+        </div>
+        <div class="form-group">
+          <label class="form-label">비밀번호</label>
+          <input class="form-input" id="lpw" type="password" placeholder="비밀번호를 입력하세요" value="" oninput="state.loginPw=this.value" autocomplete="current-password">
+          <div class="form-hint">※ 도서관 홈페이지 패스워드와 동일</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin:8px 0 14px">
+          <input type="checkbox" id="auto" style="accent-color:#c4a35a;width:16px;height:16px" checked="">
+          <label for="auto" style="font-size:13px;color:#555;cursor:pointer">✔ 자동로그인</label>
+        </div>
+        <button class="btn-primary" onclick="doLogin()">로그인</button>
+        <button class="btn-secondary" onclick="state.screen=&#39;register&#39;;state.registerStep=1;render()">회원가입</button>
+      </div>
+      <div style="text-align:center;margin-top:16px;font-size:12px;color:#999">
+        테스트 계정: <b>student1</b> / <b>1234</b>
+      </div>
+    </div>
+    <div class="login-footer">COPYRIGHT (C) 2026 KWANGWOON UNIVERSITY. ALL RIGHTS RESERVED.</div>
+  </div></div></div>
+
+<script>
+const KW_LOGO = `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="26" cy="26" r="25" fill="#8B1A2B" stroke="#c4a35a" stroke-width="1.5"/>
+  <text x="26" y="31" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="serif">광운</text>
+</svg>`;
+
+const ROOMS = [
+  {id:'r4',name:'4인 스터디룸',capacity:4,colorClass:'',desc:'소그룹 집중 학습'},
+  {id:'r6',name:'6인 스터디룸',capacity:6,colorClass:'r6',desc:'중형 그룹 토론'},
+  {id:'r8',name:'8인 스터디룸',capacity:8,colorClass:'r8',desc:'대형 그룹 프로젝트'},
+  {id:'r10',name:'10인 스터디룸',capacity:10,colorClass:'r10',desc:'대형 세미나'},
+];
+
+const SLOTS = ['09:00','10:00','11:00'];
+
+const DEPTS = ['전자공학과','컴퓨터공학과','소프트웨어학과','전기공학과','기계공학과','경영학과','인문학부','수학과'];
+
+function getDates(){
+  const d=[];
+  const today=new Date();
+  const days=['일','월','화','수','목','금','토'];
+  for(let i=0;i<7;i++){
+    const nd=new Date(today);
+    nd.setDate(today.getDate()+i);
+    d.push({
+      key:`${nd.getFullYear()}-${String(nd.getMonth()+1).padStart(2,'0')}-${String(nd.getDate()).padStart(2,'0')}`,
+      label:i===0?'오늘':i===1?'내일':days[nd.getDay()],
+      date:nd.getDate()
+    });
+  }
+  return d;
+}
+
+const state = {
+  screen: 'login',
+  user: null,
+  bookings: [],
+  messages: [],
+  selectedDate: getDates()[0].key,
+  selectedRoom: null,
+  selectedSlot: null,
+  selectedDuration: 1,
+  modalOpen: false,
+  modalType: null,
+  toast: null,
+  toastTimer: null,
+  registerStep: 1,
+  regData: {id:'',pw:'',pw2:'',name:'',dept:'',stuId:''},
+  bookedSlots: {},
+  unreadMsg: 0,
+  loginId: '',
+  loginPw: '',
+  mockUsers: {
+    'student1': {pw:'1234',name:'김광운',dept:'전자공학과',stuId:'20260001'},
+    'demo': {pw:'demo',name:'이도서',dept:'컴퓨터공학과',stuId:'20260002'},
+  }
+};
+
+function genStuId(){
+  const year = new Date().getFullYear();
+  return `${year}${String(Math.floor(Math.random()*9000)+1000).padStart(4,'0')}`;
+}
+
+function slotKey(date,room,slot){ return `${date}_${room}_${slot}`; }
+
+function isBooked(date,room,slot){
+  return !!state.bookedSlots[slotKey(date,room,slot)];
+}
+
+function isMyBooking(date,room,slot){
+  if(!state.user) return false;
+  return state.bookedSlots[slotKey(date,room,slot)] === state.user.stuId;
+}
+
+function hasBookingOnDate(date){
+  if(!state.user) return false;
+  return Object.keys(state.bookedSlots).some(k => k.startsWith(date+'_') && state.bookedSlots[k] === state.user.stuId);
+}
+
+function addMessage(title,body){
+  state.messages.unshift({id:Date.now(),title,body,time:new Date(),read:false});
+  state.unreadMsg = state.messages.filter(m=>!m.read).length;
+}
+
+function showToast(title,body,icon='ti-bell'){
+  if(state.toastTimer) clearTimeout(state.toastTimer);
+  state.toast = {title,body,icon};
+  render();
+  state.toastTimer = setTimeout(()=>{ state.toast=null; render(); }, 4000);
+}
+
+function endTimeStr(startSlot){
+  const h = parseInt(startSlot.split(':')[0]) + 1;
+  return `${String(h).padStart(2,'0')}:00`;
+}
+
+function book(date,room,slot,duration){
+  if(!state.user) return false;
+  const stuId = state.user.stuId;
+  if(hasBookingOnDate(date)){
+    showToast('예약 불가','동일 날짜에 이미 예약이 있습니다.','ti-alert-circle');
+    return false;
+  }
+  if(isBooked(date,room,slot)){
+    showToast('예약 불가','이미 예약된 시간입니다.','ti-alert-circle');
+    return false;
+  }
+  if(duration===2){
+    const slotIdx = SLOTS.indexOf(slot);
+    if(slotIdx < 0 || slotIdx >= SLOTS.length-1){
+      showToast('예약 불가','2시간 예약이 불가능한 시간입니다.','ti-alert-circle');
+      return false;
+    }
+    if(isBooked(date,room,SLOTS[slotIdx+1])){
+      showToast('예약 불가','연속 시간대에 다른 예약이 있습니다.','ti-alert-circle');
+      return false;
+    }
+    state.bookedSlots[slotKey(date,room,SLOTS[slotIdx+1])] = stuId;
+  }
+  state.bookedSlots[slotKey(date,room,slot)] = stuId;
+  const endTime = duration===2 ? endTimeStr(SLOTS[SLOTS.indexOf(slot)+1]) : endTimeStr(slot);
+  const roomName = ROOMS.find(r=>r.id===room)?.name;
+  const booking = {id:Date.now(),date,room,slot,duration,stuId,roomName,startTime:slot,endTime,status:'upcoming'};
+  state.bookings.unshift(booking);
+
+  addMessage(`예약 완료 - ${roomName}`, `${date} ${slot} 예약이 완료되었습니다. 입실 5분 전에 알림이 발송됩니다.`);
+
+  setTimeout(()=>{
+    addMessage(`⏰ 입실 5분 전 알림`, `${roomName} ${slot} 입실까지 5분 남았습니다. 입실 바랍니다.`);
+    showToast('입실 5분 전', `${roomName} 입실 바랍니다.`, 'ti-clock');
+    render();
+  }, 3000);
+
+  setTimeout(()=>{
+    addMessage(`⚠️ 퇴실 5분 전 알림`, `${roomName} 퇴실 5분 전입니다. 정리하고 나와 주세요.`);
+    showToast('퇴실 5분 전', '정리하고 나와 주세요.', 'ti-door-exit');
+    render();
+  }, 8000);
+
+  setTimeout(()=>{
+    const b = state.bookings.find(x=>x.id===booking.id);
+    if(b && b.status==='upcoming'){
+      // auto cancel simulation (10min no-show)
+    }
+  }, 13000);
+
+  showToast('예약 완료', `${roomName} ${slot} 예약되었습니다.`, 'ti-check');
+  return true;
+}
+
+function cancelBooking(bookingId){
+  const b = state.bookings.find(x=>x.id===bookingId);
+  if(!b) return;
+  b.status = 'cancelled';
+  delete state.bookedSlots[slotKey(b.date,b.room,b.slot)];
+  if(b.duration===2){
+    const si = SLOTS.indexOf(b.slot);
+    if(si>=0 && si<SLOTS.length-1) delete state.bookedSlots[slotKey(b.date,b.room,SLOTS[si+1])];
+  }
+  addMessage('예약 취소', `${b.roomName} ${b.date} ${b.slot} 예약이 취소되었습니다.`);
+  showToast('예약 취소됨', `${b.roomName} 예약이 취소되었습니다.`, 'ti-x');
+}
+
+function formatDate(d){
+  const p = d.split('-');
+  return `${p[0]}년 ${parseInt(p[1])}월 ${parseInt(p[2])}일`;
+}
+
+function relTime(d){
+  const diff = (Date.now() - d.getTime()) / 1000;
+  if(diff < 60) return '방금';
+  if(diff < 3600) return `${Math.floor(diff/60)}분 전`;
+  return `${Math.floor(diff/3600)}시간 전`;
+}
+
+function logout(){
+  state.user = null;
+  state.screen = 'login';
+  state.bookings = [];
+  state.messages = [];
+  state.bookedSlots = {};
+  state.unreadMsg = 0;
+  state.loginId = '';
+  state.loginPw = '';
+  render();
+}
+
+function navigate(screen){
+  if(screen==='messages'){ markAllRead(); }
+  state.screen = screen;
+  state.modalOpen = false;
+  render();
+}
+
+function markAllRead(){ state.messages.forEach(m=>m.read=true); state.unreadMsg=0; render(); }
+function markRead(id){ const m=state.messages.find(x=>x.id===id); if(m)m.read=true; state.unreadMsg=state.messages.filter(m=>!m.read).length; render(); }
+
+function doLogin(){
+  const id = (document.getElementById('lid')||{value:state.loginId}).value.trim();
+  const pw = (document.getElementById('lpw')||{value:state.loginPw}).value;
+  state.loginId = id;
+  state.loginPw = pw;
+  const u = state.mockUsers[id];
+  if(u && u.pw===pw){
+    state.user = {id,name:u.name,dept:u.dept,stuId:u.stuId};
+    state.screen = 'home';
+    addMessage('환영합니다', '광운대학교 도서관에 오신 것을 환영합니다. 스터디룸 예약을 이용하실 수 있습니다.');
+    render();
+  } else {
+    showToast('로그인 실패','아이디 또는 비밀번호를 확인해주세요.','ti-alert-circle');
+  }
+}
+
+function regNext1(){
+  const r = state.regData;
+  if(!r.id || r.id.length<4){ showToast('입력 오류','아이디를 4자 이상 입력해주세요.','ti-alert-circle'); return; }
+  if(!r.pw || r.pw.length<4){ showToast('입력 오류','비밀번호를 4자 이상 입력해주세요.','ti-alert-circle'); return; }
+  if(r.pw !== r.pw2){ showToast('입력 오류','비밀번호가 일치하지 않습니다.','ti-alert-circle'); return; }
+  if(state.mockUsers[r.id]){ showToast('중복 아이디','이미 사용 중인 아이디입니다.','ti-alert-circle'); return; }
+  state.registerStep = 2; render();
+}
+
+function regNext2(){
+  const r = state.regData;
+  if(!r.name){ showToast('입력 오류','이름을 입력해주세요.','ti-alert-circle'); return; }
+  if(!r.dept){ showToast('입력 오류','학과를 선택해주세요.','ti-alert-circle'); return; }
+  state.regData.stuId = genStuId();
+  state.registerStep = 3; render();
+}
+
+function completeReg(){
+  const r = state.regData;
+  state.mockUsers[r.id] = {pw:r.pw,name:r.name,dept:r.dept,stuId:r.stuId};
+  state.user = {id:r.id,name:r.name,dept:r.dept,stuId:r.stuId};
+  state.screen = 'home';
+  state.regData = {id:'',pw:'',pw2:'',name:'',dept:'',stuId:''};
+  state.registerStep = 1;
+  addMessage('가입 완료','광운대학교 도서관 회원이 되신 것을 환영합니다!');
+  showToast('가입 완료','환영합니다! 스터디룸 예약을 시작해보세요.','ti-check');
+  render();
+}
+
+function openBookModal(roomId, slot){
+  state.selectedRoom = roomId;
+  state.selectedSlot = slot;
+  state.selectedDuration = 1;
+  state.modalType = 'book';
+  state.modalOpen = true;
+  render();
+}
+
+function confirmBook(){
+  const ok = book(state.selectedDate, state.selectedRoom, state.selectedSlot, state.selectedDuration);
+  if(ok){
+    state.modalOpen = false;
+    state.screen = 'booking';
+    render();
+  }
+}
+
+function selectDuration(d){ state.selectedDuration = d; render(); }
+function selectDept(dept){ state.regData.dept = dept; render(); }
+
+function renderBarcodeLines(){
+  let html='';
+  [2,1,3,2,1,1,2,3,1,2,2,1,1,3,2,1,3,1,2,1,2,3,1,1,2,3,1,2].forEach(w=>{
+    html += `<div class="bar" style="width:${w*1.8}px;height:28px;"></div>`;
+  });
+  return html;
+}
+
+/* ── RENDER FUNCTIONS ── */
+
+function renderLogin(){
+  return `<div class="login-screen">
+    <div class="login-header">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px">
+        <div style="width:48px;height:48px">${KW_LOGO}</div>
+        <div style="text-align:left">
+          <div style="color:white;font-size:16px;font-weight:700">광운대학교</div>
+          <div style="color:rgba(255,255,255,0.75);font-size:9px;letter-spacing:1px">KwangWoon University</div>
+        </div>
+      </div>
+      <div class="title">MOBILE LIBRARY</div>
+      <div class="sub">스터디룸 예약 시스템</div>
+    </div>
+    <div class="login-body">
+      <div class="login-card">
+        <div class="login-card-title">MOBILE LIBRARY</div>
+        <div class="form-group">
+          <label class="form-label">도서관 아이디</label>
+          <input class="form-input" id="lid" type="text" placeholder="아이디를 입력하세요" value="${state.loginId}" oninput="state.loginId=this.value" autocomplete="username" autocapitalize="none">
+        </div>
+        <div class="form-group">
+          <label class="form-label">비밀번호</label>
+          <input class="form-input" id="lpw" type="password" placeholder="비밀번호를 입력하세요" value="${state.loginPw}" oninput="state.loginPw=this.value" autocomplete="current-password">
+          <div class="form-hint">※ 도서관 홈페이지 패스워드와 동일</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin:8px 0 14px">
+          <input type="checkbox" id="auto" style="accent-color:#c4a35a;width:16px;height:16px" checked>
+          <label for="auto" style="font-size:13px;color:#555;cursor:pointer">✔ 자동로그인</label>
+        </div>
+        <button class="btn-primary" onclick="doLogin()">로그인</button>
+        <button class="btn-secondary" onclick="state.screen='register';state.registerStep=1;render()">회원가입</button>
+      </div>
+      <div style="text-align:center;margin-top:16px;font-size:12px;color:#999">
+        테스트 계정: <b>student1</b> / <b>1234</b>
+      </div>
+    </div>
+    <div class="login-footer">COPYRIGHT (C) 2026 KWANGWOON UNIVERSITY. ALL RIGHTS RESERVED.</div>
+  </div>`;
+}
+
+function renderRegister(){
+  const step = state.registerStep;
+  const r = state.regData;
+  const progress = [1,2,3].map(n=>`<div style="flex:1;height:4px;border-radius:2px;background:${n<=step?'#8B1A2B':'#e0e0e0'}"></div>`).join('');
+  let body = '';
+  if(step===1){
+    body = `<div class="step-badge"><i class="ti ti-user-plus"></i>기본 정보 (1/3)</div>
+    <div class="form-group">
+      <label class="form-label">아이디</label>
+      <input class="form-input" type="text" placeholder="영문+숫자 4자 이상" value="${r.id}" oninput="state.regData.id=this.value" autocapitalize="none">
+    </div>
+    <div class="form-group">
+      <label class="form-label">비밀번호</label>
+      <input class="form-input" type="password" placeholder="4자 이상" value="${r.pw}" oninput="state.regData.pw=this.value">
+    </div>
+    <div class="form-group">
+      <label class="form-label">비밀번호 확인</label>
+      <input class="form-input" type="password" placeholder="비밀번호 재입력" value="${r.pw2}" oninput="state.regData.pw2=this.value">
+    </div>
+    <button class="btn-primary" onclick="regNext1()">다음 →</button>`;
+  } else if(step===2){
+    body = `<div class="step-badge"><i class="ti ti-school"></i>학적 정보 (2/3)</div>
+    <div class="form-group">
+      <label class="form-label">이름</label>
+      <input class="form-input" type="text" placeholder="실명 입력" value="${r.name}" oninput="state.regData.name=this.value">
+    </div>
+    <div class="form-group">
+      <label class="form-label">학과 선택</label>
+      <div class="dept-grid">
+        ${DEPTS.map(d=>`<div class="dept-chip${r.dept===d?' selected':''}" onclick="selectDept('${d}')">${d}</div>`).join('')}
+      </div>
+    </div>
+    <button class="btn-primary" onclick="regNext2()">다음 →</button>
+    <button class="btn-secondary" onclick="state.registerStep=1;render()">← 이전</button>`;
+  } else {
+    body = `<div class="step-badge"><i class="ti ti-id-badge"></i>가입 완료 (3/3)</div>
+    <div class="generated-id">
+      <div class="id-label">발급된 학번</div>
+      <div class="id-num">${r.stuId}</div>
+    </div>
+    <div class="confirm-box">
+      <i class="ti ti-info-circle" style="color:#c4a35a;margin-right:4px"></i>
+      학번은 스터디룸 예약에 사용됩니다.<br>반드시 메모해 두세요.<br><br>
+      아이디: <b>${r.id}</b> &nbsp;|&nbsp; 이름: <b>${r.name}</b><br>
+      학과: <b>${r.dept}</b>
+    </div>
+    <button class="btn-primary" onclick="completeReg()">가입 완료 및 로그인</button>`;
+  }
+  return `<div class="login-screen">
+    <div class="login-header" style="padding-bottom:20px">
+      <div style="display:flex;align-items:center;gap:10px;justify-content:center">
+        <div style="width:40px;height:40px">${KW_LOGO}</div>
+        <div style="color:white;font-size:16px;font-weight:700">광운대학교 도서관</div>
+      </div>
+      <div class="title">회원가입</div>
+    </div>
+    <div class="login-body">
+      <div class="login-card">
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:16px">${progress}</div>
+        ${body}
+      </div>
+    </div>
+    <div class="login-footer">COPYRIGHT (C) 2026 KWANGWOON UNIVERSITY.</div>
+  </div>`;
+}
+
+const ICONS = {
+  id:`<svg viewBox="0 0 52 52" fill="none"><rect x="10" y="16" width="32" height="20" rx="3" fill="#C4A35A" opacity="0.3"/><rect x="10" y="16" width="32" height="20" rx="3" stroke="#C4A35A" stroke-width="2"/><circle cx="20" cy="26" r="4" fill="#C4A35A" opacity="0.5"/><line x1="26" y1="24" x2="38" y2="24" stroke="#1a5fa8" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="28" x2="36" y2="28" stroke="#1a5fa8" stroke-width="2" stroke-linecap="round"/><rect x="14" y="8" width="24" height="30" rx="3" stroke="#C4A35A" stroke-width="1.5" stroke-dasharray="2 2"/></svg>`,
+  notice:`<svg viewBox="0 0 52 52" fill="none"><path d="M12 28 L24 22 L28 16 L32 22 L40 26" stroke="#1a5fa8" stroke-width="2.5" stroke-linecap="round" fill="none"/><rect x="34" y="22" width="6" height="12" rx="2" fill="#8B1A2B"/><rect x="10" y="26" width="10" height="10" fill="#C4A35A" opacity="0.5" rx="1"/></svg>`,
+  reading:`<svg viewBox="0 0 52 52" fill="none"><rect x="8" y="28" width="36" height="4" rx="2" fill="#1a5fa8"/><rect x="8" y="32" width="36" height="8" rx="2" fill="#1a5fa8" opacity="0.3"/><circle cx="26" cy="20" r="8" fill="#C4A35A" opacity="0.4" stroke="#C4A35A" stroke-width="1.5"/><path d="M22 20 C23 18 25 17 26 18 C27 19 28 21 26 22" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>`,
+  myseat:`<svg viewBox="0 0 52 52" fill="none"><circle cx="26" cy="18" r="7" fill="#C4A35A" opacity="0.5" stroke="#C4A35A" stroke-width="1.5"/><rect x="14" y="30" width="24" height="8" rx="3" fill="#8B1A2B" opacity="0.8"/><rect x="14" y="36" width="24" height="2" rx="1" fill="#1a5fa8"/></svg>`,
+  study:`<svg viewBox="0 0 52 52" fill="none"><circle cx="18" cy="20" r="5" fill="#C4A35A" opacity="0.5" stroke="#C4A35A" stroke-width="1.5"/><circle cx="34" cy="20" r="5" fill="#C4A35A" opacity="0.5" stroke="#C4A35A" stroke-width="1.5"/><circle cx="26" cy="16" r="5" fill="#C4A35A" opacity="0.7" stroke="#C4A35A" stroke-width="1.5"/><rect x="10" y="30" width="32" height="6" rx="3" fill="#1a5fa8"/></svg>`,
+  pc:`<svg viewBox="0 0 52 52" fill="none"><rect x="10" y="14" width="32" height="20" rx="3" fill="#1a5fa8" opacity="0.3" stroke="#1a5fa8" stroke-width="2"/><rect x="20" y="34" width="12" height="4" rx="1" fill="#C4A35A" opacity="0.7"/><path d="M18 20 L22 22 L20 26 L24 24" stroke="#8B1A2B" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  web:`<svg viewBox="0 0 52 52" fill="none"><rect x="8" y="20" width="36" height="22" rx="3" fill="#1a5fa8" opacity="0.2" stroke="#1a5fa8" stroke-width="2"/><circle cx="14" cy="16" r="2" fill="#C4A35A"/><circle cx="22" cy="16" r="2" fill="#C4A35A" opacity="0.5"/><rect x="12" y="25" width="28" height="3" rx="1.5" fill="#1a5fa8" opacity="0.5"/><rect x="12" y="32" width="20" height="3" rx="1.5" fill="#1a5fa8" opacity="0.3"/></svg>`,
+  msg:`<svg viewBox="0 0 52 52" fill="none"><rect x="8" y="16" width="36" height="24" rx="4" fill="#C4A35A" opacity="0.3" stroke="#C4A35A" stroke-width="2"/><path d="M12 22 L26 30 L40 22" stroke="#8B1A2B" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="12" y1="18" x2="20" y2="18" stroke="#8B1A2B" stroke-width="2" stroke-linecap="round"/></svg>`,
+};
+
+function renderHome(){
+  const items = [
+    {label:'모바일 이용증',icon:'id',screen:'idcard'},
+    {label:'공지사항',icon:'notice',screen:'notice'},
+    {label:'자유열람실',icon:'reading',screen:null},
+    {label:'내 자리',icon:'myseat',screen:'booking'},
+    {label:'그룹스터디룸',icon:'study',screen:'reserve'},
+    {label:'PC좌석 현황',icon:'pc',screen:null},
+    {label:'도서관 홈페이지',icon:'web',screen:null},
+    {label:'메시지',icon:'msg',screen:'messages'},
+  ];
+  const unread = state.unreadMsg;
+  const grid = items.map((item)=>{
+    const badge = item.label==='메시지' && unread>0
+      ? `<div style="position:absolute;top:-4px;right:-4px;background:#8B1A2B;color:white;font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700">${unread}</div>`
+      : '';
+    const onclick = item.screen ? `navigate('${item.screen}')` : '';
+    const opacity = (!item.screen) ? 'opacity:0.6;' : '';
+    return `<div class="grid-item" onclick="${onclick}" style="${opacity}">
+      <div class="icon-wrap" style="position:relative">${ICONS[item.icon]}${badge}</div>
+      <div class="grid-label">${item.label}</div>
+    </div>`;
+  }).join('');
+  return `<div style="background:#f5f5f5">
+    <div style="background:#8B1A2B;padding:10px 14px 12px">
+      <div class="home-grid">${grid}</div>
+    </div>
+    <div class="home-copyright">COPYRIGHT (C) 2026 KWANGWOON UNIVERSITY.<br>ALL RIGHTS RESERVED.</div>
+  </div>`;
+}
+
+function renderIDCard(){
+  const u = state.user;
+  return `<div class="content" style="padding-top:12px">
+    <div class="section">모바일 이용증</div>
+    <div class="id-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+        <div>
+          <div class="id-card-label">KWANGWOON UNIVERSITY</div>
+          <div style="font-size:18px;font-weight:700;font-family:'Oswald',sans-serif;color:white">도서관 이용증</div>
+        </div>
+        <div style="width:36px;height:36px">${KW_LOGO}</div>
+      </div>
+      <div class="id-card-label">학번</div>
+      <div class="id-card-num">${u.stuId}</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+        <div><div class="id-card-label">이름</div><div class="id-card-value">${u.name}</div></div>
+        <div><div class="id-card-label">학과</div><div class="id-card-value" style="font-size:12px">${u.dept}</div></div>
+      </div>
+      <div class="id-card-barcode">${renderBarcodeLines()}</div>
+      <div style="font-size:9px;opacity:0.6;text-align:center;margin-top:6px;letter-spacing:2px">${u.stuId}</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">이름</span><span style="font-weight:600">${u.name}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">학번</span><span style="font-weight:600;font-family:monospace">${u.stuId}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">학과</span><span style="font-weight:600">${u.dept}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#888">아이디</span><span style="font-weight:600">${u.id}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderReserve(){
+  const dates = getDates();
+  const todayHasBooking = hasBookingOnDate(state.selectedDate);
+  return `<div class="content" style="padding-top:10px">
+    <div class="section">그룹 스터디룸 예약</div>
+    <div class="date-strip">
+      ${dates.map(d=>`
+        <div class="date-chip${state.selectedDate===d.key?' active':''}" onclick="state.selectedDate='${d.key}';render()">
+          <span style="display:block;font-size:9px;opacity:0.7;margin-bottom:1px">${d.label}</span>
+          <span>${d.date}</span>
+        </div>`).join('')}
+    </div>
+    <div style="padding:4px 14px 8px;font-size:12px;color:#888">${formatDate(state.selectedDate)}</div>
+    ${todayHasBooking?`<div style="margin:0 14px 10px;padding:10px 14px;background:#FFF8E7;border:1px solid #f0d89a;border-radius:10px;font-size:12px;color:#7a5c00">
+      <i class="ti ti-alert-triangle" style="margin-right:4px"></i>이 날짜에 이미 예약이 있습니다. 동일 날짜 중복 예약은 불가합니다.
+    </div>`:''}
+    <div class="slot-legend">
+      <div class="legend-item"><div class="legend-dot a"></div>예약 가능</div>
+      <div class="legend-item"><div class="legend-dot b"></div>예약 완료</div>
+      <div class="legend-item"><div class="legend-dot m"></div>내 예약</div>
+    </div>
+    ${ROOMS.map(room=>`
+      <div class="room-card">
+        <div class="room-card-header ${room.colorClass}">
+          <div>
+            <div class="room-label">${room.name}</div>
+            <div class="room-capacity"><i class="ti ti-users" style="font-size:11px;margin-right:3px"></i>${room.capacity}인 | ${room.desc}</div>
+          </div>
+          <i class="ti ti-door-enter" style="font-size:22px;color:rgba(255,255,255,0.7)"></i>
+        </div>
+        <div class="room-slots">
+          ${SLOTS.map(slot=>{
+            const mine = isMyBooking(state.selectedDate,room.id,slot);
+            const booked = isBooked(state.selectedDate,room.id,slot) && !mine;
+            const cls = mine?'mine':booked?'booked':'available';
+            const onclick = cls==='available'&&!todayHasBooking ? `openBookModal('${room.id}','${slot}')` : '';
+            return `<div class="slot ${cls}" onclick="${onclick}">${slot.split(':')[0]}:00<br><span style="font-size:9px;opacity:0.7">${mine?'내 예약':booked?'예약됨':'예약가능'}</span></div>`;
+          }).join('')}
+        </div>
+      </div>`).join('')}
+    <div style="height:16px"></div>
+  </div>`;
+}
+
+function renderBookModal(){
+  const room = ROOMS.find(r=>r.id===state.selectedRoom);
+  const slot = state.selectedSlot;
+  const slotIdx = SLOTS.indexOf(slot);
+  const canDo2 = slotIdx>=0 && slotIdx<SLOTS.length-1 && !isBooked(state.selectedDate,state.selectedRoom,SLOTS[slotIdx+1]);
+  const end1 = endTimeStr(slot);
+  const end2 = canDo2 ? endTimeStr(SLOTS[slotIdx+1]) : '불가';
+  return `<div class="modal-overlay" onclick="if(event.target===this){state.modalOpen=false;render()}">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-title">${room.name} 예약</div>
+      <div class="modal-sub">${formatDate(state.selectedDate)}</div>
+      <div class="form-group">
+        <label class="form-label">이용 시간 선택</label>
+        <div class="time-selector">
+          <div class="time-option${state.selectedDuration===1?' selected':''}" onclick="selectDuration(1)">
+            <div class="time-radio"></div>
+            <i class="ti ti-clock"></i>
+            <div class="time-option-text">1시간 &nbsp;${slot} ~ ${end1}</div>
+          </div>
+          <div class="time-option${state.selectedDuration===2?' selected':''}${!canDo2?' disabled':''}" onclick="${canDo2?'selectDuration(2)':''}">
+            <div class="time-radio"></div>
+            <i class="ti ti-clock-2"></i>
+            <div class="time-option-text">2시간 &nbsp;${slot} ~ ${end2}${!canDo2?' (다음 타임 예약됨)':''}</div>
+          </div>
+        </div>
+      </div>
+      <div class="confirm-box">
+        <i class="ti ti-info-circle" style="color:#c4a35a;margin-right:4px"></i>
+        예약 5분 전 입실 알람이 발송됩니다.<br>
+        예약 시간 10분 초과 시 자동 취소됩니다.<br>
+        퇴실 5분 전 정리 알람이 발송됩니다.
+      </div>
+      <div style="font-size:12px;color:#888;margin-bottom:8px">학번: <b style="color:#222">${state.user.stuId}</b></div>
+      <button class="btn-primary" onclick="confirmBook()">예약하기</button>
+      <button class="btn-secondary" onclick="state.modalOpen=false;render()">취소</button>
+    </div>
+  </div>`;
+}
+
+function renderBookings(){
+  const myBookings = state.bookings.filter(b=>b.stuId===state.user?.stuId);
+  return `<div class="content" style="padding-top:12px">
+    <div class="section">내 예약 현황</div>
+    ${myBookings.length===0?`<div style="text-align:center;padding:40px 20px;color:#bbb">
+      <i class="ti ti-calendar-off" style="font-size:40px;display:block;margin-bottom:10px"></i>예약 내역이 없습니다
+    </div>`:''}
+    ${myBookings.map(b=>`
+      <div class="booking-item">
+        <div class="booking-top">
+          <div>
+            <div class="booking-room">${b.roomName}</div>
+            <div class="booking-date">${formatDate(b.date)}</div>
+          </div>
+          <div class="booking-badge ${b.status}">${
+            b.status==='upcoming'?'예약중':b.status==='done'?'이용완료':'취소됨'
+          }</div>
+        </div>
+        <div class="booking-info">
+          <div class="booking-time">
+            <i class="ti ti-clock"></i>${b.startTime} ~ ${b.endTime} (${b.duration}시간)
+          </div>
+          <div>
+            ${b.status==='upcoming'?`<button class="btn-sm red" onclick="cancelBooking(${b.id})">취소</button>`:''}
+          </div>
+        </div>
+      </div>`).join('')}
+    <div style="height:16px"></div>
+  </div>`;
+}
+
+function renderMessages(){
+  return `<div class="content" style="padding-top:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 14px 4px">
+      <div class="section" style="padding:0">메시지함</div>
+      ${state.messages.length>0?`<button class="btn-sm gray" onclick="markAllRead()">모두 읽음</button>`:''}
+    </div>
+    ${state.messages.length===0?`<div style="text-align:center;padding:40px 20px;color:#bbb">
+      <i class="ti ti-mail-off" style="font-size:40px;display:block;margin-bottom:10px"></i>메시지가 없습니다
+    </div>`:''}
+    ${state.messages.map(m=>`
+      <div class="msg-item${m.read?'':' unread'}" onclick="markRead(${m.id})">
+        <div class="msg-top">
+          <div class="msg-title">${m.read?'':'<span class="msg-dot"></span>'}${m.title}</div>
+          <div class="msg-time">${relTime(m.time)}</div>
+        </div>
+        <div class="msg-body">${m.body}</div>
+      </div>`).join('')}
+    <div style="height:16px"></div>
+  </div>`;
+}
+
+function renderProfile(){
+  const u = state.user;
+  return `<div class="content" style="padding-top:12px">
+    <div class="section">내 정보</div>
+    <div class="profile-card">
+      <div class="profile-avatar">${u.name[0]}</div>
+      <div>
+        <div class="profile-name">${u.name}</div>
+        <div class="profile-id">${u.stuId}</div>
+        <div class="profile-dept">${u.dept}</div>
+      </div>
+    </div>
+    <div class="info-list">
+      <div class="info-row"><i class="ti ti-user"></i><div class="info-row-text">아이디</div><div class="info-row-value">${u.id}</div></div>
+      <div class="info-row"><i class="ti ti-id-badge"></i><div class="info-row-text">학번</div><div class="info-row-value" style="font-family:monospace">${u.stuId}</div></div>
+      <div class="info-row"><i class="ti ti-building"></i><div class="info-row-text">소속</div><div class="info-row-value">${u.dept}</div></div>
+      <div class="info-row"><i class="ti ti-calendar-check"></i><div class="info-row-text">총 예약 횟수</div><div class="info-row-value">${state.bookings.filter(b=>b.stuId===u.stuId).length}회</div></div>
+    </div>
+    <div class="section">이용 안내</div>
+    <div class="card"><div class="card-body" style="font-size:13px;color:#444;line-height:2">
+      • 예약 가능 시간: 09:00 ~ 12:00<br>
+      • 1시간 또는 2시간 단위 예약<br>
+      • 동일 날짜 중복 예약 불가<br>
+      • 입실 5분 전 / 퇴실 5분 전 알림 발송<br>
+      • 예약 시간 10분 초과 시 자동 취소<br>
+      • 학번으로 입실 확인
+    </div></div>
+    <button class="btn-primary" style="margin:0 14px;width:calc(100% - 28px)" onclick="logout()">
+      <i class="ti ti-logout" style="margin-right:6px"></i>로그아웃
+    </button>
+    <div style="height:24px"></div>
+  </div>`;
+}
+
+function renderNotice(){
+  const notices = [
+    {title:'[필독] 스터디룸 이용 수칙 안내',date:'2026-06-01'},
+    {title:'도서관 하계 운영시간 변경 안내',date:'2026-05-28'},
+    {title:'2026학년도 1학기 시험기간 좌석 예약 안내',date:'2026-05-20'},
+    {title:'그룹스터디룸 기자재 신청 방법 안내',date:'2026-05-15'},
+  ];
+  return `<div class="content" style="padding-top:12px">
+    <div class="section">공지사항</div>
+    ${notices.map(n=>`
+      <div class="notice-item">
+        <div class="notice-title">${n.title}</div>
+        <div class="notice-date">${n.date}</div>
+      </div>`).join('')}
+    <div style="height:16px"></div>
+  </div>`;
+}
+
+/* ── MAIN RENDER ── */
+
+function render(){
+  const app = document.getElementById('app');
+  if(!app) return;
+
+  if(state.screen==='login'){
+    app.innerHTML = `<div style="flex:1;overflow-y:auto">${renderLogin()}</div>`;
+    return;
+  }
+  if(state.screen==='register'){
+    app.innerHTML = `<div style="flex:1;overflow-y:auto">${renderRegister()}</div>`;
+    return;
+  }
+
+  const navScreens = ['home','reserve','booking','messages','profile'];
+  const backScreens = ['idcard','notice'];
+  const navLabels = {home:'홈',reserve:'예약',booking:'내 예약',messages:'메시지',profile:'프로필'};
+  const navIcons = {home:'ti-home',reserve:'ti-door-enter',booking:'ti-calendar-check',messages:'ti-mail',profile:'ti-user'};
+  const unread = state.messages.filter(m=>!m.read).length;
+
+  let contentHtml = '';
+  if(state.screen==='home') contentHtml = renderHome();
+  else if(state.screen==='reserve') contentHtml = renderReserve();
+  else if(state.screen==='booking') contentHtml = renderBookings();
+  else if(state.screen==='messages') contentHtml = renderMessages();
+  else if(state.screen==='profile') contentHtml = renderProfile();
+  else if(state.screen==='idcard') contentHtml = renderIDCard();
+  else if(state.screen==='notice') contentHtml = renderNotice();
+
+  const isNavScreen = navScreens.includes(state.screen);
+
+  app.innerHTML = `
+    <div class="status-bar">
+      <span id="clock">${new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}</span>
+      <div class="status-right"><i class="ti ti-wifi" style="font-size:14px"></i><span>98%</span></div>
+    </div>
+    <div class="header">
+      ${backScreens.includes(state.screen)
+        ? `<button class="header-btn" onclick="state.screen='home';render()"><i class="ti ti-arrow-left"></i></button>`
+        : `<div style="width:32px"></div>`}
+      <div class="header-logo">
+        <div style="width:34px;height:34px">${KW_LOGO}</div>
+        <div class="header-title"><div class="kr">광운대학교</div><div class="en">KwangWoon University</div></div>
+      </div>
+      <button class="header-btn" onclick="logout()" title="로그아웃"><i class="ti ti-power" style="font-size:20px"></i></button>
+    </div>
+    ${contentHtml}
+    ${isNavScreen ? `<div class="bottom-nav">
+      ${['home','reserve','booking','messages','profile'].map(s=>`
+        <button class="nav-item${state.screen===s?' active':''}" onclick="navigate('${s}')">
+          ${s==='messages'&&unread>0
+            ? `<div style="position:relative;display:inline-block"><i class="ti ${navIcons[s]}"></i><div class="nav-badge">${unread}</div></div>`
+            : `<i class="ti ${navIcons[s]}"></i>`}
+          <span>${navLabels[s]}</span>
+        </button>`).join('')}
+    </div>` : ''}
+    ${state.toast ? `<div class="toast">
+      <i class="ti ${state.toast.icon}"></i>
+      <div><div class="toast-title">${state.toast.title}</div><div class="toast-body">${state.toast.body}</div></div>
+      <button class="toast-close" onclick="state.toast=null;render()">×</button>
+    </div>` : ''}
+    ${state.modalOpen&&state.modalType==='book' ? renderBookModal() : ''}
+  `;
+}
+
+/* ── GLOBAL HANDLERS ── */
+window.doLogin=doLogin; window.regNext1=regNext1; window.regNext2=regNext2;
+window.completeReg=completeReg; window.navigate=navigate; window.logout=logout;
+window.openBookModal=openBookModal; window.confirmBook=confirmBook;
+window.cancelBooking=cancelBooking; window.markAllRead=markAllRead;
+window.markRead=markRead; window.selectDuration=selectDuration;
+window.selectDept=selectDept;
+
+render();
+
+setInterval(()=>{
+  const el = document.getElementById('clock');
+  if(el) el.textContent = new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+}, 10000);
+</script>
+
+
+</body></html>
